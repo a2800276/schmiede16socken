@@ -2,12 +2,22 @@ package socken
 
 import "container/list"
 
+// Game can:
+// - be created (NewGame)
+// - manage cards (GetCard, ReturnCard)
+// = manage players (AddPlayer, RemovePlayer)
 type Game struct {
 	Players *list.List
 	Cards   *list.List
+	Card    *Card
 	Round   int
 	View    View
 }
+
+// Player can:
+// - be created (Game.AddPlayer)
+// - die (Game.RemovePlayer) -- tbd periodic task to remove inactive players
+// - guess (Player.Guess)
 type Player struct {
 	Name   string
 	Number int
@@ -16,8 +26,6 @@ type Player struct {
 	Game   *Game
 }
 
-var playerCounter = 0
-
 func NewGame() *Game {
 	game := new(Game)
 	game.Players = list.New()
@@ -25,8 +33,13 @@ func NewGame() *Game {
 	for i := 0; i != NUM_CARDS; i++ {
 		game.Cards.PushBack(GetCard(i))
 	}
+	game.Card = game.GetCard()
+	game.View = DummyView{}
 	return game
 }
+
+// assign uuid to player to identify them on the wire.
+var playerCounter = 0
 
 // initialize a new Player ...
 func (g *Game) AddPlayer(name string) *Player {
@@ -51,6 +64,7 @@ func (g *Game) RemovePlayer(player *Player) {
 	if nil == elem {
 		return
 	}
+	g.ReturnCard(player.Card)
 	g.Players.Remove(elem)
 }
 
@@ -71,8 +85,41 @@ func (g *Game) ReturnCard(card *Card) {
 	g.Cards.PushBack(card)
 }
 
-func (p *Player) Guess(sym Symbol) {
+func (g *Game) GetPlayerByName(name string) *Player {
+	for e := g.Players.Front(); e != nil; e = e.Next() {
+		player := e.Value.(*Player)
+		if player.Name == name {
+			return player
+		}
+	}
+	return nil
+}
+func (g *Game) GetPlayerById(id int) *Player {
+	for e := g.Players.Front(); e != nil; e = e.Next() {
+		player := e.Value.(*Player)
+		if player.Number == id {
+			return player
+		}
+	}
+	return nil
 
+}
+
+func (p *Player) Guess(guess Symbol) {
+	match := p.Card.Match(p.Game.Card)
+	if match == guess {
+		p.Score += 1
+		// view: flash score
+		p.Game.ReturnCard(p.Card)
+		p.Card = p.Game.Card
+		p.Game.Card = p.Game.GetCard()
+		// view: new card
+		// playerView: new card
+	} else {
+		p.Score -= 1
+		// view : flash score
+		// playerView : moep.
+	}
 }
 
 func findElement(value interface{}, l *list.List) *list.Element {

@@ -80,6 +80,7 @@ var cards [][]Symbol = [][]Symbol{
 const (
 	MIN_CARD  = 0
 	MAX_CARD  = 56
+	NUM_CARDS = 57
 	SAME_CARD = 57
 )
 
@@ -89,18 +90,18 @@ type Card struct {
 
 type Symbol uint
 
-func GetCard(i int) Card {
+func GetCard(i int) *Card {
 	if i > len(cards) || i < 0 {
 		panic("unpossible ... i")
 	}
-	return Card{i}
+	return &Card{i}
 }
 
 func (c *Card) Symbols() []Symbol {
 	return cards[c.Index]
 }
 
-func (c *Card) Match(other Card) Symbol {
+func (c *Card) Match(other *Card) Symbol {
 	if other.Index == c.Index {
 		return SAME_CARD
 	}
