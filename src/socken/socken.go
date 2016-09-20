@@ -1,5 +1,7 @@
 package socken
 
+import "fmt"
+
 // Each card has 8 motives. Any two cards intersect over one motive.
 
 // A  01 02 03 04 05 06 07 08                                                                                     | 1
@@ -113,4 +115,8 @@ func (c *Card) Match(other *Card) Symbol {
 		}
 	}
 	panic("unpossible ... no match")
+}
+
+func (c *Card) String() string {
+	return fmt.Sprintf("%q", c.Symbols())
 }

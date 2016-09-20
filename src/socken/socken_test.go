@@ -96,7 +96,6 @@ func TestScoreCorrect(t *testing.T) {
 
 	for i := 0; i != 1000; i++ {
 		tmpCard := game.Card
-		correct := player1.Card.Match(game.Card)
 
 		var player *Player
 		if i%2 == 0 {
@@ -104,9 +103,11 @@ func TestScoreCorrect(t *testing.T) {
 		} else {
 			player = player2
 		}
+		correct := player.Card.Match(game.Card)
 
 		player.Guess(correct)
 		if tmpCard != player.Card {
+			println(tmpCard.String())
 			t.Error("Card not won by player")
 		}
 	}
