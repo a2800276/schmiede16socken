@@ -1,11 +1,67 @@
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="css/css.css">
+  <script src = "js/board.js"></script>
+  <script>
+    function showGame() {
+      show("#game")
+      populateBoard([1,2,3,4,5,6,7,8])
+    }
+    function main() {
+      //adjustSize();
+      show("#preload")
+      preloadSocken(  
+        function(perc){
+          var d = document.querySelector("#preload_indicator")
+              d.innerText = perc + "%"
+          if (perc == 100) {
+            show("#anleitung")
+            //show("#game")
+            //populateBoard([1,2,3,4,5,6,7,8])
+          }
+        }
+      )
+    }
+
+    
+    window.onload = main
+  </script>
+
 </head>
 <body>
-  <h1>Welcome</h1>
-  <form action="/newplayer" method="POST">
+  <div id="preload">  
+    <center>
+    <h5 id="preload_indicator"></h5>
+    </center> 
+  </div>
+
+  <div id="anleitung"> 
+    <h1>Anleitung</h1>
+    <p>
+      Bla bla bla bla bla bla
+      bla bla bla blabla bla bla
+      blabla bla blabla bla bla
+      bla bla bla bla blabla
+    </p>
+     <p>
+      Bla bla bla bla bla bla
+      bla bla bla blabla bla bla
+      blabla bla blabla bla bla
+      bla bla bla bla blabla
+    </p>
     <h2>Your Name: <input type="text" name="name"/></h2>
-    <input type="submit">
-  </form>
+    <input type="button" value='submit' onclick="showGame()"/>
+  </div> <!-- anleitung -->
+
+
+  <!-- GAME -->
+  <div id="game">     
+    <center>
+      <canvas id = "board"></canvas>
+    </center>
+  </div>
+  <!-- GAME -->
+
 </body>
 </html>

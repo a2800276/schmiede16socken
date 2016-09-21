@@ -23,10 +23,11 @@ var hotspots;
 // card is an array [0..57)
 function populateBoard ( card ) {
   var cvs = document.querySelector("#board")
-  var sz = min(document.body.clientWidth, document.body.clientHeight) / 1.5
-  cvs.width = cvs.height = sz
+  var sz = Math.floor(min(window.innerWidth, window.innerHeight))
+  cvs.width = cvs.height = Math.floor(sz)
+  log ('set width to:' +sz);
 
-
+  
   // clear hotspots
   hotspots = {}
 
@@ -48,7 +49,6 @@ function populateBoard ( card ) {
   var h = w = cvs.height / 3
   for (var i = 0, j=0; i != 9 ; ++i) {
     if (i == skip) {log("skip"+i); continue}
-    log(i+""+card.length);
     var x = Math.floor(i / 3) * w
     var y = Math.floor(i % 3) * h
 

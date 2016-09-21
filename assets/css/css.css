@@ -2,16 +2,25 @@
 
 html {
   font-family: sans-serif;
+  margin: 5em;
+  /*background-color: red;*/
+  position: absolute;
 }
 
-#preload {}
+#preload {
+  visibility: none;
+  width:100%;
+}
 
 #anleitung {
   visibility: none;
+  width:100%;
 }
 #anleitung {
   visibility: none;
+  width:100%;
 }
 #game {
   visibility: none;
+  width:100%;
 }

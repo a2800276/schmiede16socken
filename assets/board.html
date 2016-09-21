@@ -10,7 +10,7 @@
               d.innerText = perc + "%"
           if (perc == 100) {
             show("#anleitung")
-            show("#game")
+            //show("#game")
             populateBoard([1,2,3,4,5,6,7,8])
           }
         }
@@ -29,10 +29,26 @@
 
   <div id="anleitung"> 
     <h1>Anleitung</h1>
+    <p>
+      Bla bla bla bla bla bla
+      bla bla bla blabla bla bla
+      blabla bla blabla bla bla
+      bla bla bla bla blabla
+    </p>
+     <p>
+      Bla bla bla bla bla bla
+      bla bla bla blabla bla bla
+      blabla bla blabla bla bla
+      bla bla bla bla blabla
+    </p>
+    <input type="button" value="click" onclick="javascript:show('#game')"/>
+
   </div> <!-- anleitung -->
   
-  <div id="game">       
-    <canvas id = "board"></canvas>
+  <div id="game">     
+    <center>
+      <canvas id = "board"></canvas>
+    </center>
     <div id = "player">
       <h2>Player</h2>
       <ul>
