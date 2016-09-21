@@ -21,10 +21,11 @@ function show (div_id) {
 var hotspots;
 
 // card is an array [0..57)
-function populateBoard ( card ) {
+function populateBoard ( card, sizeFactor ) {
+  sizeFactor = sizeFactor ? sizeFactor : 1
   var cvs = document.querySelector("#board")
   var sz = Math.floor(min(window.innerWidth, window.innerHeight))
-  cvs.width = cvs.height = Math.floor(sz)
+  cvs.width = cvs.height = Math.floor(sz / sizeFactor)
   log ('set width to:' +sz);
 
   
@@ -40,7 +41,7 @@ function populateBoard ( card ) {
 
   // two of which will be subdivided, two full sized
   
-  ctx = cvs.getContext("2d")
+  var ctx = cvs.getContext("2d")
   
   // 9 possible fields, skip one.
   var skip = Math.floor(Math.random() * 10)
@@ -51,19 +52,70 @@ function populateBoard ( card ) {
     if (i == skip) {log("skip"+i); continue}
     var x = Math.floor(i / 3) * w
     var y = Math.floor(i % 3) * h
-
+    
+    try {
     ctx.drawImage(imgs[card[j]], x, y, w, h)
+    } catch (e) {
+      log(e)
+      log(card[j])
+      log(j)
+      log("---")
+    }
     hotspots[card[j]] = [x,y, w,h]
     j++
   }
 
 
 
-  cvs.onclick = function (e) {
-    var c = findCard(e)
-    log(c)
-  }
+  cvs.onmousedown = pressCircle
+  //cvs.ontouchstart = pressCircle
 
+  //cvs.onmouseup = rePopulate
+  //cvs.ontouchend = rePopulate
+  
+}
+
+
+function pressCircle (e) {
+    var c = findCard(e)
+    if (c != -1) {
+      // draw circle around hotspot
+      var hotspot = c[1]
+      var cvs = document.querySelector("#board")
+      var ctx = cvs.getContext("2d")
+
+      var x = hotspot[H.X] + hotspot[H.W]/2
+      var y = hotspot[H.Y] + hotspot[H.H]/2
+
+      ctx.beginPath()
+      ctx.arc(x,y,w/3,0, Math.PI*2, false)
+      ctx.fillStyle='rgba(255,0,0,0.5)'
+      ctx.fill()
+      ctx.closePath()
+
+      setTimeout(rePopulate, 250)
+    }
+
+}
+
+function rePopulate() {
+
+  var cvs = document.querySelector("#board")
+  var ctx = cvs.getContext("2d")
+
+  ctx.clearRect(0, 0, cvs.width, cvs.height);
+
+  for (var p in hotspots) {
+    if (p) {
+      var hotspot = hotspots[p],
+                x = hotspot[H.X],
+                y = hotspot[H.Y],
+                w = hotspot[H.W],
+                h = hotspot[H.H],
+              img = imgs[p]
+      ctx.drawImage(img, x, y, w, h)
+    }
+  }
 }
 
 var H = {}
@@ -82,7 +134,7 @@ function findCard(e) {
         && hotspot[H.Y] < y
         && hotspot[H.X] + hotspot[H.W] > x
         && hotspot[H.Y] + hotspot[H.H] > y )
-    return p    
+    return [p, hotspot]    
   }
   return -1
 }
