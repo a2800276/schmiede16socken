@@ -6,9 +6,11 @@
     function main() {
       preloadSocken(  
         function(perc){
-          var d = document.querySelector("#box")
-              d.innerText = perc
+          var d = document.querySelector("#preload_indicator")
+              d.innerText = perc + "%"
           if (perc == 100) {
+            show("#anleitung")
+            show("#game")
             populateBoard([1,2,3,4,5,6,7,8])
           }
         }
@@ -18,7 +20,26 @@
   </script>
 </head>
 <body>
-  <div id="box"></div>
-  <canvas id = "board" />
+
+  <div id="preload">  
+    <center>
+    <h1 id="preload_indicator"></h1>
+    </center>
+  </div>
+
+  <div id="anleitung"> 
+    <h1>Anleitung</h1>
+  </div> <!-- anleitung -->
+  
+  <div id="game">       
+    <canvas id = "board"></canvas>
+    <div id = "player">
+      <h2>Player</h2>
+      <ul>
+        <li> Player 1 </li>
+        <li> Player 2 </li>
+      </ul>
+    </div>
+  </div> <!-- game-->
 </body>
 </html>

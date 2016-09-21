@@ -1,20 +1,20 @@
 
+// contains ALL socks
 var imgs = []
 
-// urls : array of imgs
-// cb   : progress indicator (%)
-function preloadImages(urls, cb) {
 
-  var numLoaded = 0
+// lazy programmers hate typing.
+function log (m) {
+  console.log(m);
+}
 
-  for (var i = 0; i!= urls.length; ++i) {
-    imgs[i] = new Image()
-    imgs[i].src = urls[i]
-    imgs[i].onload = function () {
-      numLoaded += 1
-      cb (Math.floor((numLoaded / urls.length) * 100) )
-    }
-  }
+// poor man's single page app
+
+function show (div_id) {
+  ["#preload", "#anleitung", "#game"].forEach(function(id){
+    document.querySelector(id).hidden = true
+  })
+  document.querySelector(div_id).hidden = false
 }
 
 // hotspots stores locations {symbol : [x,y,w,h]} for clicks etc.
@@ -23,12 +23,11 @@ var hotspots;
 // card is an array [0..57)
 function populateBoard ( card ) {
   var cvs = document.querySelector("#board")
-  console.log(cvs.height)
-  console.log(cvs.width)
-  cvs.height = cvs.height * 2
-  console.log(cvs.height)
-  console.log(cvs.width)
+  var sz = min(document.body.clientWidth, document.body.clientHeight) / 1.5
+  cvs.width = cvs.height = sz
 
+
+  // clear hotspots
   hotspots = {}
 
   // board will be in four quadrants:
@@ -42,7 +41,10 @@ function populateBoard ( card ) {
   
   ctx = cvs.getContext("2d")
   
+  // 9 possible fields, skip one.
   var skip = Math.floor(Math.random() * 10)
+  
+  // everything is square
   var h = w = cvs.height / 3
   for (var i = 0, j=0; i != 9 ; ++i) {
     if (i == skip) {log("skip"+i); continue}
@@ -89,14 +91,30 @@ function findCard(e) {
 // preloading boilerplate
 function preloadSocken (cb) {
   var sockens = []
-  for (var i = 0; i!= 58; ++i) {
-    var num = i.toString()
-    if (i<10) { num = "0"+num }
-    sockens.push("socks/"+num+".png")
+    for (var i = 0; i!= 58; ++i) {
+      var num = i.toString()
+        if (i<10) { num = "0"+num }
+      sockens.push("socks/"+num+".png")
+    }
+
+  preloadImages (sockens, cb) 
+}
+
+// urls : array of imgs
+// cb   : progress indicator (%)
+function preloadImages(urls, cb) {
+
+  var numLoaded = 0
+
+  for (var i = 0; i!= urls.length; ++i) {
+    imgs[i] = new Image()
+    imgs[i].src = urls[i]
+    imgs[i].onload = function () {
+      numLoaded += 1
+      cb (Math.floor((numLoaded / urls.length) * 100) )
+    }
   }
-
-  preloadImages (sockens, cb) }
-
+}
 
 
 // stolen from stack overflow:
@@ -113,8 +131,8 @@ function shuffle(a) {
     }
 }
 
-
-
-function log (m) {
-  console.log(m);
+function min (a, b) {
+  return a<b ? a : b;
 }
+
+
