@@ -20,6 +20,10 @@ function show (div_id) {
 // hotspots stores locations {symbol : [x,y,w,h]} for clicks etc.
 var hotspots;
 
+
+function populateSharedBoard (card) {
+  populateBoard(card, 1.5)
+}
 // card is an array [0..57)
 function populateBoard ( card, sizeFactor ) {
   sizeFactor = sizeFactor ? sizeFactor : 1
@@ -75,9 +79,19 @@ function populateBoard ( card, sizeFactor ) {
   
 }
 
+function highlightSymbol (symbol) {
+  var hotspot = hotspots[symbol]
+  highlightHotspot([symbol, hotspot])
+}
 
+// 'press'ing a symbol draws a circle around it ...
+// shitty naming.
 function pressCircle (e) {
     var c = findCard(e)
+    highlightHotspot(c)
+}
+
+function highlightHotspot(c) {
     if (c != -1) {
       // draw circle around hotspot
       var hotspot = c[1]
@@ -113,6 +127,7 @@ function rePopulate() {
                 w = hotspot[H.W],
                 h = hotspot[H.H],
               img = imgs[p]
+              log(p)
       ctx.drawImage(img, x, y, w, h)
     }
   }

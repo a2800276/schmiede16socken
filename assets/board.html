@@ -2,11 +2,12 @@
 <head>
   <link rel="stylesheet" type="text/css" href="css/css.css">
   <script src = "js/board.js"></script>
+  <script src = "js/sharedboard.js"></script>
   <script>
     
     function showGame() {
       show("#game")
-      populateBoard([1,2,3,4,5,6,7,8], 1.5)
+      populateSharedBoard([1,1,1,1,1,1,1,1])
     }
 
     function main() {
@@ -16,7 +17,8 @@
               d.innerText = perc + "%"
           if (perc == 100) {
             show("#anleitung")
-        }
+          } // perc
+        } // cb
       )
     }
     window.onload = main
@@ -44,7 +46,7 @@
       blabla bla blabla bla bla
       bla bla bla bla blabla
     </p>
-    <input type="button" value="click" onclick="javascript:show('#game')"/>
+    <input type="button" value="click" onclick="javascript:showGame()">
 
   </div> <!-- anleitung -->
   
@@ -53,12 +55,15 @@
       <canvas id = "board"></canvas>
     </center>
     <div id = "player">
-      <h2>Player</h2>
-      <ul>
+      <h2>Players</h2>
+      <ol id="player_list">
         <li> Player 1 </li>
         <li> Player 2 </li>
-      </ul>
+      </ol>
     </div>
   </div> <!-- game-->
+
+  <div id = "message"> 
+  </div>
 </body>
 </html>

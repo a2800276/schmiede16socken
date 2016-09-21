@@ -24,3 +24,11 @@ html {
   visibility: none;
   width:100%;
 }
+
+#message {
+  position: absolute;
+  visibility: none;
+  width:100%;
+  top: 150px;
+  left: 100px;
+}
