@@ -11,7 +11,7 @@ func main() {
 	http.HandleFunc("/newplayer", server.NewPlayer)
 	http.HandleFunc("/player/", server.Player)
 
-	http.HandleFunc("/board", server.Board)
+	//	http.HandleFunc("/board", server.Board)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
