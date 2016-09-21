@@ -1,0 +1,24 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="css/css.css">
+  <script src = "js/board.js"></script>
+  <script>
+    function main() {
+      preloadSocken(  
+        function(perc){
+          var d = document.querySelector("#box")
+              d.innerText = perc
+          if (perc == 100) {
+            populateBoard([1,2,3,4,5,6,7,8])
+          }
+        }
+      )
+    }
+    window.onload = main
+  </script>
+</head>
+<body>
+  <div id="box"></div>
+  <canvas id = "board" />
+</body>
+</html>
