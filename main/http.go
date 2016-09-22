@@ -8,8 +8,8 @@ import "socken/server"
 
 func main() {
 	http.Handle("/", server.StaticServer)
-	http.HandleFunc("/newplayer", server.NewPlayer)
-	http.HandleFunc("/player/", server.Player)
+	http.Handle("/sharedboard", server.SharedBoard)
+	http.Handle("/playerboard", server.PlayerBoard)
 
 	//	http.HandleFunc("/board", server.Board)
 

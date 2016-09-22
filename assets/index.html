@@ -3,8 +3,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <link rel="stylesheet" type="text/css" href="css/css.css">
   <script src = "js/board.js"></script>
+  <script src = "js/playerboard.js"></script>
   <script>
     function showGame() {
+      startWebsocket()
       show("#game")
       populateBoard([1,2,3,4,5,6,7,8])
     }
@@ -50,7 +52,7 @@
       blabla bla blabla bla bla
       bla bla bla bla blabla
     </p>
-    <h2>Your Name: <input type="text" name="name"/></h2>
+    <h2>Your Name: <input id="playername" type="text" name="name"/></h2>
     <input type="button" value='submit' onclick="showGame()"/>
   </div> <!-- anleitung -->
 
@@ -59,6 +61,7 @@
   <center>
     <div id="game">     
         <canvas id = "board"></canvas>
+    <div id = 'playermessage'></div>
     </div>
   </center>
   <!-- GAME -->

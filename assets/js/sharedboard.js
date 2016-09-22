@@ -127,9 +127,4 @@ function displayPlayers () {
   player_list.innerHTML = html
 }
 
-// http://stackoverflow.com/questions/10406930/how-to-construct-a-websocket-uri-relative-to-the-page-uri
-function ws_url(s) {
-    var l = window.location;
-    return ((l.protocol === "https:") ? "wss://" : "ws://") + l.host + l.pathname + s;
-}
 

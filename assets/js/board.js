@@ -88,6 +88,9 @@ function highlightSymbol (symbol) {
 // shitty naming.
 function pressCircle (e) {
     var c = findCard(e)
+    if (c != -1 && sendGuess) {
+      sendGuess(c[0])
+    }
     highlightHotspot(c)
 }
 
@@ -197,6 +200,13 @@ function shuffle(a) {
         a[j] = x;
     }
 }
+
+// http://stackoverflow.com/questions/10406930/how-to-construct-a-websocket-uri-relative-to-the-page-uri
+function ws_url(s) {
+    var l = window.location;
+    return ((l.protocol === "https:") ? "wss://" : "ws://") + l.host + "/"+ s;
+}
+
 
 function min (a, b) {
   return a<b ? a : b;
