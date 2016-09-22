@@ -49,6 +49,7 @@ function receivedGameMessage (e) {
 
 
 function sendGuess(symbol) {
+  log ('sending: '+ symbol)
   socket.send(symbol.toString())
 }
 function sendMessage(msg) {

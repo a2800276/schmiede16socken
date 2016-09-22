@@ -32,6 +32,7 @@ func PlayerServer(ws *websocket.Conn) {
 			name := strings.Split(msg, ":")[1]
 			WSView.AddPlayer(name, ws)
 		} else {
+			println("here, man")
 			// guess -- parseInt
 			var i int64 = -1
 			i, _ = strconv.ParseInt(msg, 10, 32)
@@ -44,12 +45,12 @@ func PlayerServer(ws *websocket.Conn) {
 func SharedServer(ws *websocket.Conn) {
 	var msg string
 	for {
+		WSView.SharedSocket = ws
+		WSView.BoardCard()
 		if err := websocket.Message.Receive(ws, &msg); err != nil {
 			// waaahhh!
 			return
 		}
-		WSView.SharedSocket = ws
-		WSView.BoardCard()
 	}
 }
 

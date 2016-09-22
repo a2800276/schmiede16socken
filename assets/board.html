@@ -7,10 +7,13 @@
     
     function showGame() {
       show("#game")
-      populateSharedBoard([1,1,1,1,1,1,1,1])
+      //populateSharedBoard([1,1,1,1,1,1,1,1])
+      rePopulate()
     }
 
     function main() {
+
+      start()
       preloadSocken(  
         function(perc){
           var d = document.querySelector("#preload_indicator")

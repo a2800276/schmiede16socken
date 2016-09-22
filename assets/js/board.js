@@ -51,19 +51,20 @@ function populateBoard ( card, sizeFactor ) {
   var skip = Math.floor(Math.random() * 10)
   
   // everything is square
-  var h = w = cvs.height / 3
+  var h = w = Math.floor(cvs.height / 3)
   for (var i = 0, j=0; i != 9 ; ++i) {
     if (i == skip) {log("skip"+i); continue}
     var x = Math.floor(i / 3) * w
     var y = Math.floor(i % 3) * h
     
     try {
-    ctx.drawImage(imgs[card[j]], x, y, w, h)
+      ctx.drawImage(imgs[card[j]], x, y, w, h)
     } catch (e) {
+      log("--> weird bug")
       log(e)
       log(card[j])
       log(j)
-      log("---")
+      log("<--")
     }
     hotspots[card[j]] = [x,y, w,h]
     j++
@@ -88,7 +89,10 @@ function highlightSymbol (symbol) {
 // shitty naming.
 function pressCircle (e) {
     var c = findCard(e)
-    if (c != -1 && sendGuess) {
+    log ("here, fucker")
+    log (typeof(sendGuess))
+    log (c)
+    if (c != -1 && (typeof(sendGuess) !== "undefined")) {
       sendGuess(c[0])
     }
     highlightHotspot(c)
@@ -130,7 +134,6 @@ function rePopulate() {
                 w = hotspot[H.W],
                 h = hotspot[H.H],
               img = imgs[p]
-              log(p)
       ctx.drawImage(img, x, y, w, h)
     }
   }

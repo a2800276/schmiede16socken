@@ -107,6 +107,8 @@ func (g *Game) GetPlayerById(id int) *Player {
 
 func (p *Player) Guess(guess Symbol) bool {
 	match := p.Card.Match(p.Game.Card)
+	println("here, dude")
+	println(match)
 	if match == guess {
 		p.Score += 1
 		// view: flash score

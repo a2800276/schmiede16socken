@@ -21,6 +21,9 @@ function receivedGameMessage (e) {
   //  data: 'Timbob'
   //} 
   
+  log(data)
+  log(gameEvent)
+
   var func = null;
   switch (gameEvent.name) {
     case "addPlayer":

@@ -37,10 +37,11 @@ func NewView() *WebsocketView {
 
 func (v *WebsocketView) AddPlayer(name string, c *websocket.Conn) {
 	player := v.Game.AddPlayer(name)
+	v.PlayerSockets[name] = c
 	v.NewPlayerCard(player)
 
-	v.PlayerSockets[name] = c
-
+	data := fmt.Sprintf("\"%s\"", player.Name)
+	v.sendSharedSocket("addPlayer", data)
 	v.Broadcast(fmt.Sprintf("Welcome: %s!", name))
 
 }
@@ -62,7 +63,6 @@ func (v *WebsocketView) Guess(guess Symbol, c *websocket.Conn) {
 			break
 		}
 	}
-
 	player := v.Game.GetPlayerByName(playerName)
 	player.Guess(Symbol(guess))
 }
@@ -88,6 +88,10 @@ func (v *WebsocketView) BoardCard() {
 }
 func (v *WebsocketView) NewPlayerCard(p *Player) {
 	socket := v.PlayerSockets[p.Name]
+
+	fmt.Printf("player: %s\n", encodeCard(p.Card))
+	fmt.Printf("game: %s\n", encodeCard(v.Game.Card))
+
 	websocket.Message.Send(socket, fmt.Sprintf("newCard:%s", encodeCard(p.Card)))
 }
 
