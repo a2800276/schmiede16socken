@@ -30,13 +30,12 @@ func PlayerServer(ws *websocket.Conn) {
 		if strings.Index(msg, "Hello") == 0 {
 			// Hello:<name>
 			name := strings.Split(msg, ":")[1]
-			WSView.AddPlayer(name, ws)
+			socken.TheView.AddPlayer(name, ws)
 		} else {
-			println("here, man")
 			// guess -- parseInt
 			var i int64 = -1
 			i, _ = strconv.ParseInt(msg, 10, 32)
-			WSView.Guess(socken.Symbol(i), ws)
+			socken.TheView.Guess(socken.Symbol(i), ws)
 		}
 
 	}
@@ -45,8 +44,11 @@ func PlayerServer(ws *websocket.Conn) {
 func SharedServer(ws *websocket.Conn) {
 	var msg string
 	for {
-		WSView.SharedSocket = ws
-		WSView.BoardCard()
+		if socken.TheView.SharedSocket == nil {
+			println("here?")
+			socken.TheView.SharedSocket = ws
+		}
+		socken.TheView.BoardCard()
 		if err := websocket.Message.Receive(ws, &msg); err != nil {
 			// waaahhh!
 			return

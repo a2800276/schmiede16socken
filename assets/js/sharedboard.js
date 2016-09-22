@@ -8,7 +8,9 @@ var socket
 function start () {
   socket = new WebSocket(ws_url("sharedboard"));
   socket.onopen = function() {}
-  socket.onclose = function () {}
+  socket.onclose = function () {
+    show("#anleitung")
+  }
   socket.onmessage = receivedGameMessage
 }
 
@@ -45,6 +47,7 @@ function receivedGameMessage (e) {
       func = playerUpdate // [name, score]
       break
     case "msg":
+      gameEvent.data = gameEvent.data.split(":")[1]
       func = displayMessage // message
   }
 
@@ -62,7 +65,9 @@ function addPlayer (name) {
 
 // done
 function newCard (card) {
-  populateSharedBoard(card)
+  setTimeout ( function () {
+    populateSharedBoard(card)
+  }, 500)
 }
 
 //done
