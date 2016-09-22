@@ -110,15 +110,22 @@ func (p *Player) Guess(guess Symbol) bool {
 	if match == guess {
 		p.Score += 1
 		// view: flash score
+		p.Game.View.CorrectGuess(guess, p)
+
 		p.Game.ReturnCard(p.Card)
 		p.Card = p.Game.Card
 		p.Game.Card = p.Game.GetCard()
 		// view: new card
 		// playerView: new card
+
+		p.Game.View.NewPlayerCard(p)
+		p.Game.View.BoardCard()
+
 		return true
 	} else {
 		p.Score -= 1
-		// view : flash score
+		p.Game.View.IncorrectGuess(p)
+
 		// playerView : moep.
 		return false
 	}

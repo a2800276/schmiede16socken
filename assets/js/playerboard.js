@@ -32,6 +32,18 @@ function startWebsocket() {
 // done
 function receivedGameMessage (e) {
   log(e)
+  var data = e.data
+  var sp = data.split(":")
+  switch (sp[0]) {
+    case "newCard":
+      var card = JSON.parse(sp[1])
+      populateBoard(card)
+      break;
+    case "msg":
+      displayMessage(sp[1])
+      break;
+    default:
+  }
   displayMessage(e.data)
 }
 

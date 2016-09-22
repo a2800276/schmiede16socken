@@ -48,6 +48,8 @@ func SharedServer(ws *websocket.Conn) {
 			// waaahhh!
 			return
 		}
+		WSView.SharedSocket = ws
+		WSView.BoardCard()
 	}
 }
 

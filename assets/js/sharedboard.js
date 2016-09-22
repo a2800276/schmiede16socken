@@ -33,13 +33,16 @@ function receivedGameMessage (e) {
       func = correctGuess // [name, symbol]
       break
     case "incorrectGuess":
-      func = incorrectGuess // [name, symbol]
+      func = incorrectGuess // name 
       break
     case "playerRemove":
       func = playerRemove // name
       break
     case "playerUpdate":
       func = playerUpdate // [name, score]
+      break
+    case "msg":
+      func = displayMessage // message
   }
 
   func(gameEvent.data);
@@ -69,9 +72,7 @@ function correctGuess (arr) {
 }
 
 // done
-function incorrectGuess (arr) {
-  playerName = arr[0]
-  symbol = arr[1]
+function incorrectGuess (playerName) {
   // show player
   displayMessage(playerName + " -1 ☹");
 }
