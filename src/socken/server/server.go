@@ -4,12 +4,17 @@ import (
 	"fmt"
 	"golang.org/x/net/websocket"
 	"net/http"
+	"strconv"
+	"strings"
+)
+
+import (
+	"socken"
 )
 
 var StaticServer http.Handler = http.FileServer(http.Dir("./assets"))
 
-var playerSockets map[string]*websocket.Conn = make(map[string]*websocket.Conn)
-var sharedSockets map[string]*websocket.Conn = make(map[string]*websocket.Conn)
+var WSView = socken.NewView()
 
 // Echo the data received on the WebSocket.
 func PlayerServer(ws *websocket.Conn) {
@@ -21,8 +26,18 @@ func PlayerServer(ws *websocket.Conn) {
 			// remove from all
 			return
 		}
-		fmt.Printf("msg: %s\n", msg)
-		websocket.Message.Send(ws, "Hi There!")
+
+		if strings.Index(msg, "Hello") == 0 {
+			// Hello:<name>
+			name := strings.Split(msg, ":")[1]
+			WSView.AddPlayer(name, ws)
+		} else {
+			// guess -- parseInt
+			var i int64 = -1
+			i, _ = strconv.ParseInt(msg, 10, 32)
+			WSView.Guess(socken.Symbol(i), ws)
+		}
+
 	}
 }
 
