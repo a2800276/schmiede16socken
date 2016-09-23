@@ -6,7 +6,6 @@ var players = []
 var socket
 
 function start () {
-  goFullscreen()
   socket = new WebSocket(ws_url("sharedboard"));
   socket.onopen = function() {}
   socket.onclose = function () {

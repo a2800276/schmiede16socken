@@ -22,8 +22,6 @@ html {
 #game {
   visibility: none;
   width:100%;
-  margin-left: 100px;
-  margin-top: 50px;
 }
 
 #title {
