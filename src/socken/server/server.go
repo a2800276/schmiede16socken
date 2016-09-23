@@ -14,8 +14,6 @@ import (
 
 var StaticServer http.Handler = http.FileServer(http.Dir("./assets"))
 
-var WSView = socken.NewView()
-
 // Echo the data received on the WebSocket.
 func PlayerServer(ws *websocket.Conn) {
 	// add to all
@@ -24,6 +22,7 @@ func PlayerServer(ws *websocket.Conn) {
 		if err := websocket.Message.Receive(ws, &msg); err != nil {
 			fmt.Printf("here2 %q\n", err)
 			// remove from all
+			socken.TheView.RemoveDeadSocket(ws)
 			return
 		}
 

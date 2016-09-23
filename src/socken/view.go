@@ -64,16 +64,30 @@ func (v WebsocketView) Broadcast(msg string) {
 }
 
 func (v WebsocketView) Guess(guess Symbol, c *websocket.Conn) {
-	// find name
-	var playerName = ""
+	player := v.FindPlayerBySocket(c)
+	if player != nil {
+		player.Guess(Symbol(guess))
+
+	}
+}
+
+func (v WebsocketView) FindPlayerBySocket(c *websocket.Conn) *Player {
 	for name, s := range v.PlayerSockets {
+		println(name)
 		if c == s {
-			playerName = name
-			break
+			return v.Game.GetPlayerByName(name)
 		}
 	}
-	player := v.Game.GetPlayerByName(playerName)
-	player.Guess(Symbol(guess))
+	return nil
+}
+
+func (v WebsocketView) RemoveDeadSocket(c *websocket.Conn) {
+	player := v.FindPlayerBySocket(c)
+	if player != nil {
+		delete(v.PlayerSockets, player.Name)
+		v.Game.RemovePlayer(player)
+		v.RemovePlayer(player)
+	}
 }
 
 func (v WebsocketView) CorrectGuess(guess Symbol, player *Player) {
@@ -96,6 +110,12 @@ func (v WebsocketView) BoardCard() {
 	data := encodeCard(v.Game.Card)
 	sendSharedSocket("newCard", data)
 }
+
+func (v WebsocketView) RemovePlayer(player *Player) {
+	data := fmt.Sprintf("\"%s\"", player.Name)
+	sendSharedSocket("playerRemove", data)
+}
+
 func (v WebsocketView) NewPlayerCard(p *Player) {
 	socket := TheView.PlayerSockets[p.Name]
 

@@ -108,11 +108,7 @@ function playerRemove (name) {
       players.push(entry)
     }
   }
-  if (players.length == 0) {
-    show("#anleitung")
-  } else {
     displayPlayers()
-  }
 }
 
 // done
