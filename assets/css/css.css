@@ -51,7 +51,13 @@ html {
   width:20%;
   float: left;
   /*border: 1px solid black;*/
+  font-size: 15pt;
 }
+
+ol {
+font-size: 15pt;
+}
+
 #game_board{
   width:70%;
   float: left;

@@ -44,7 +44,6 @@ function receivedGameMessage (e) {
       break;
     default:
   }
-  displayMessage(e.data)
 }
 
 
