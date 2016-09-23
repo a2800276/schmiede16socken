@@ -36,10 +36,15 @@ html {
 }
 
 #game_anleitung{
-  width:10% !important;
+  width:20%;
   float: left;
+  border: 1px solid black;
 }
-#game_board{}
+#game_board{
+  width:70%;
+  float: left;
+  border: 1px solid black;
+}
 #game_highscore{
   position: absolute;
   right: 0px;
