@@ -7,6 +7,7 @@ html {
 
 #main {
   width: 100%;
+  border: 1px solid black;
 }
 #preload {
   visibility: none;
@@ -27,8 +28,8 @@ html {
   position: absolute;
   visibility: none;
   width:100%;
-  top: 150px;
-  left: 100px;
+  top: 250px;
+  left: 250px;
 }
 
 #playermessage {

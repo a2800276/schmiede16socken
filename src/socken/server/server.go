@@ -47,6 +47,8 @@ func SharedServer(ws *websocket.Conn) {
 		if socken.TheView.SharedSocket == nil {
 			println("here?")
 			socken.TheView.SharedSocket = ws
+		} else {
+			socken.TheView.SharedSocket = ws
 		}
 		socken.TheView.BoardCard()
 		if err := websocket.Message.Receive(ws, &msg); err != nil {
