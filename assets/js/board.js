@@ -22,7 +22,7 @@ var hotspots;
 
 
 function populateSharedBoard (card) {
-  populateBoard(card, 1.1)
+  populateBoard(card, 4)
 }
 // card is an array [0..57)
 function populateBoard ( card, sizeFactor ) {

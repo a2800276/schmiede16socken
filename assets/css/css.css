@@ -2,11 +2,12 @@
 
 html {
   font-family: sans-serif;
-  /* margin: 5em; */
-  /*background-color: red;*/
   position: absolute;
 }
 
+#main {
+  width: 100%;
+}
 #preload {
   visibility: none;
   width:100%;
@@ -14,12 +15,9 @@ html {
 
 #anleitung {
   visibility: none;
-  width:75%;
+  /*width:75%;*/
 }
-#anleitung {
-  visibility: none;
-  width:100%;
-}
+
 #game {
   visibility: none;
   width:100%;
@@ -35,4 +33,16 @@ html {
 
 #playermessage {
   visibility: none;
+}
+
+#game_anleitung{
+  width:10% !important;
+  float: left;
+}
+#game_board{}
+#game_highscore{
+  position: absolute;
+  right: 0px;
+  width:10%;
+  border: 1px solid black;
 }
